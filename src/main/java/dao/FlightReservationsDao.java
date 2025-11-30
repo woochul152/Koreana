@@ -6,7 +6,7 @@ import java.util.List;
 import model.FlightReservations;
 
 public class FlightReservationsDao {
-	
+	//준구님
 	public List<FlightReservations> getReservations(int FlightNum, String airlineID, String CustomerName) {
 		
 		/*
@@ -37,7 +37,7 @@ public class FlightReservationsDao {
 		return reservations;
 		
 	}
-	
+	//우철
 	public List<FlightReservations> getRevenueSummary(int FlightNum, String airlineID, String CustomerName,String destCity) {
 		
 		/*
@@ -65,7 +65,7 @@ public class FlightReservationsDao {
 		
 	}
 	
-	
+	//우철
 	public List<FlightReservations> getPassengerList(int FlightNum, String AirlineID) {
 		
 		/*
@@ -92,6 +92,7 @@ public class FlightReservationsDao {
 		
 	}
 	
+	//준구님
 	public List<FlightReservations> getCurrentReservations(int accountNo) {
 		
 		/*
@@ -121,6 +122,7 @@ public class FlightReservationsDao {
 		
 	}
 
+	//준구님
 	public List<FlightReservations> getAllReservations(int accountNo) {
 		
 		/*
@@ -150,6 +152,7 @@ public class FlightReservationsDao {
 		
 	}
 	
+	//준구님
 	public String cancelReservation(int resrNo) {
 		
 		/*

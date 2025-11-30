@@ -7,6 +7,7 @@ import model.SalesReport;
 
 public class SalesReportDao {
 	
+	//우철
 	public List<SalesReport> getSalesReport(String month, String year) {
 		
 		/*
