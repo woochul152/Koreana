@@ -7,7 +7,7 @@ import model.Itinerary;
 
 public class ItineraryDao {
 	
-	//준구님
+	//Jungu
 	public List<Itinerary> getItineraryForReservation(int resrNo) {
 			/*
 			 * Code to fetch itinerary from resrNo goes here

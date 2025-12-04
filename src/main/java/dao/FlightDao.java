@@ -1,52 +1,53 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import model.Employee;
+import java.sql.*;
 import model.Flight;
 
 public class FlightDao {
 	
+	static String url = "jdbc:mysql://localhost:3306/travel_reservation?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&autoReconnect=true";
+    static String id = "root";
+    static String password = "root";
+    
 	public List<Flight> getAllFlights() {
 		/* Get list of all flights, code goes here
 		 */
 		List<Flight> flights = new ArrayList<Flight>();
 		
-		String url = "jdbc:mysql://localhost:3306/demo";
-		String query = "SELECT * FROM Flight";
-		String id = "root";
-		String password = "root";
-		try{
-			Connection con = DriverManager.getConnection(url, id, password);
-			PreparedStatement ps = con.prepareStatement(query);
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
-				Flight flight = new Flight();
-				flight.setAirlineID(rs.getString("AirlineID"));
-				flight.setFlightNo(rs.getInt("FlightNo"));
-				flight.setNumOfSeats(rs.getInt("NoOfSeats"));
-				flight.setDaysOperating(rs.getString("DaysOperating"));
-				flight.setMinLengthOfStay(rs.getInt("MinLengthOfStay"));
-				flight.setMaxLengthOfStay(rs.getInt("MaxLengthOfStay"));
-				flight.setMaxLengthOfStay(rs.getInt("NumReservations"));
-				flights.add(flight);
-			}
-		} catch (SQLException e){
-			System.out.println(e);
-		}
+	    String query = "SELECT * FROM Flight";
 
-		/*Sample data ends*/
-		
-		return flights;
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection con = DriverManager.getConnection(url, id, password);
+
+	        PreparedStatement ps = con.prepareStatement(query);
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+	            Flight flight = new Flight();
+
+	            flight.setAirlineID(rs.getString("AirlineID"));
+	            flight.setFlightNo(rs.getInt("FlightNo"));
+	            flight.setNumOfSeats(rs.getInt("NumOfSeats"));
+	            flight.setDaysOperating(rs.getString("DaysOperating"));
+	            flight.setMinLengthOfStay(rs.getInt("MinLengthOfStay"));
+	            flight.setMaxLengthOfStay(rs.getInt("MaxLengthOfStay"));
+	            flight.setNumReservations(rs.getInt("NumReservations"));
+
+	            flights.add(flight);
+	        }
+
+	    } catch (SQLException e) {
+	        System.out.println("SQL Error: " + e.getMessage());
+	    } catch (ClassNotFoundException e) {
+	        System.out.println("MySQL Driver not found: " + e.getMessage());
+	    }
+
+	    return flights;
 	}
-
-
+	
 	public List<Flight> mostActiveFlights() {
 		
 		/* Get list of most active flights, code goes here
@@ -54,15 +55,41 @@ public class FlightDao {
 		
 		List<Flight> flights = new ArrayList<Flight>();
 		
-		String url = "jdbc:mysql://localhost:3306/demo";
-		String id = "root";
-		String password = "root";
+	    String query = "SELECT I.AirlineID, I.FlightNo, COUNT(*) AS NumReservations " +
+	            	   "FROM Itinerary I " +
+	            	   "JOIN FlightReservation R ON I.ResrNo = R.ResrNo " +
+	            	   "GROUP BY I.AirlineID, I.FlightNo " +
+	            	   "HAVING COUNT(*) = ( " +
+	            	   "   SELECT MAX(cnt) " +
+	            	   "   FROM ( " +
+	            	   "       SELECT COUNT(*) AS cnt " +
+	            	   "       FROM Itinerary I2 " +
+	            	   "       JOIN FlightReservation R2 ON I2.ResrNo = R2.ResrNo " +
+	            	   "       GROUP BY I2.AirlineID, I2.FlightNo " +
+	            	   "   ) AS sub " +
+	            	   ");";
+	    
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            Connection con = DriverManager.getConnection(url, id, password);
 
-		String query = "SELECT * FROM Flight";
+	            PreparedStatement ps = con.prepareStatement(query);
+	            ResultSet rs = ps.executeQuery();
 
-		/*Sample data ends*/
-		
-		return flights;
+	            while (rs.next()) {
+	                Flight flight = new Flight();
+	                flight.setAirlineID(rs.getString("AirlineID"));
+	                flight.setFlightNo(rs.getInt("FlightNo"));
+	                flight.setNumReservations(rs.getInt("NumReservations"));
+	                flights.add(flight);
+	            }
+	        } catch (SQLException e) {
+	            System.out.println(e);
+	        } catch (ClassNotFoundException e) {
+	            System.out.println("MySQL Driver not found: " + e);
+	        }
+
+	        return flights;
 	}
 	
 	public List<Flight> getFlightsForAirport(String airport) {
@@ -73,20 +100,41 @@ public class FlightDao {
 		
 		List<Flight> flights = new ArrayList<Flight>();
 		
-		for (int i = 0; i < 5; i++) {
-			Flight flight = new Flight();
-			flight.setAirlineID("AA");
-			flight.setFlightNo(111);
-			flight.setNumOfSeats(100);
-			flight.setDaysOperating("1010100");
-			flight.setMinLengthOfStay(1);
-			flight.setMaxLengthOfStay(30);
-			flights.add(flight);			
-		}
-		/*Sample data ends*/
+		String query = "SELECT F.* " +
+					   "FROM Flight F " + 
+					   "JOIN Itinerary I ON F.FlightNo = I.FlightNo AND F.AirlineID = I.AirlineID " + 
+					   "WHERE I.Departure = ? OR I.Arrival = ?";
+		try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection con = DriverManager.getConnection(url, id, password);
+
+	        PreparedStatement ps = con.prepareStatement(query);
+	        ps.setString(1, airport);
+	        ps.setString(2, airport);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+	            Flight flight = new Flight();
+	            flight.setAirlineID(rs.getString("AirlineID"));
+	            flight.setFlightNo(rs.getInt("FlightNo"));
+	            flight.setNumOfSeats(rs.getInt("NumOfSeats"));
+	            flight.setDaysOperating(rs.getString("DaysOperating"));
+	            flight.setMinLengthOfStay(rs.getInt("MinLengthOfStay"));
+	            flight.setMaxLengthOfStay(rs.getInt("MaxLengthOfStay"));
+	            flight.setNumReservations(rs.getInt("NumReservations"));
+	            flights.add(flight);
+            }
+		} catch (SQLException e) {
+            System.out.println(e);
+        } catch (ClassNotFoundException e) {
+            System.out.println("MySQL Driver not found: " + e);
+        }
 		
 		return flights;
 	}
+	
+	// Returns the flights departed and arrived on time.
 	public List<Flight> getOnTimeFlights() {
 		
 		/*
@@ -95,20 +143,41 @@ public class FlightDao {
 		
 		List<Flight> flights = new ArrayList<Flight>();
 		
-		for (int i = 0; i < 5; i++) {
-			Flight flight = new Flight();
-			flight.setAirlineID("AA");
-			flight.setFlightNo(111);
-			flight.setNumOfSeats(100);
-			flight.setDaysOperating("1010100");
-			flight.setMinLengthOfStay(1);
-			flight.setMaxLengthOfStay(30);
-			flights.add(flight);			
-		}
-		/*Sample data ends*/
+	    String query =
+	            "SELECT DISTINCT F.* " +
+	            "FROM Flight F " +
+	            "JOIN Itinerary I ON F.AirlineID = I.AirlineID AND F.FlightNo = I.FlightNo " +
+	            "WHERE I.ActualArrTime <= I.ArrTime " +
+	            "AND I.ActualDepTime <= I.DepTime";
+
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            Connection con = DriverManager.getConnection(url, id, password);
+
+	            PreparedStatement ps = con.prepareStatement(query);
+	            ResultSet rs = ps.executeQuery();
+
+	            while (rs.next()) {
+	                Flight flight = new Flight();
+	                flight.setAirlineID(rs.getString("AirlineID"));
+	                flight.setFlightNo(rs.getInt("FlightNo"));
+	                flight.setNumOfSeats(rs.getInt("NumOfSeats"));
+	                flight.setDaysOperating(rs.getString("DaysOperating"));
+	                flight.setMinLengthOfStay(rs.getInt("MinLengthOfStay"));
+	                flight.setMaxLengthOfStay(rs.getInt("MaxLengthOfStay"));
+	                flight.setNumReservations(rs.getInt("NumReservations"));
+	                flights.add(flight);
+	            }
+	        } catch (SQLException e) {
+	            System.out.println(e);
+	        } catch (ClassNotFoundException e) {
+	            System.out.println("MySQL Driver not found: " + e);
+	        }
 		
 		return flights;
 	}
+	
+	
 	public List<Flight> getDelayedFlights() {
 		
 		/*
@@ -117,22 +186,41 @@ public class FlightDao {
 		
 		List<Flight> flights = new ArrayList<Flight>();
 		
-		for (int i = 0; i < 5; i++) {
-			Flight flight = new Flight();
-			flight.setAirlineID("AA");
-			flight.setFlightNo(111);
-			flight.setNumOfSeats(100);
-			flight.setDaysOperating("1010100");
-			flight.setMinLengthOfStay(1);
-			flight.setMaxLengthOfStay(30);
-			flights.add(flight);			
-		}
-		/*Sample data ends*/
+	    String query =
+	            "SELECT DISTINCT F.* " +
+	            "FROM Flight F " +
+	            "JOIN Itinerary I ON F.AirlineID = I.AirlineID AND F.FlightNo = I.FlightNo " +
+	            "WHERE I.ActualArrTime > I.ArrTime " +
+	            "OR I.ActualDepTime > I.DepTime";
+
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            Connection con = DriverManager.getConnection(url, id, password);
+
+	            PreparedStatement ps = con.prepareStatement(query);
+	            ResultSet rs = ps.executeQuery();
+
+	            while (rs.next()) {
+	                Flight flight = new Flight();
+	                flight.setAirlineID(rs.getString("AirlineID"));
+	                flight.setFlightNo(rs.getInt("FlightNo"));
+	                flight.setNumOfSeats(rs.getInt("NumOfSeats"));
+	                flight.setDaysOperating(rs.getString("DaysOperating"));
+	                flight.setMinLengthOfStay(rs.getInt("MinLengthOfStay"));
+	                flight.setMaxLengthOfStay(rs.getInt("MaxLengthOfStay"));
+	                flight.setNumReservations(rs.getInt("NumReservations"));
+	                flights.add(flight);
+	            }
+	        } catch (SQLException e) {
+	            System.out.println(e);
+	        } catch (ClassNotFoundException e) {
+	            System.out.println("MySQL Driver not found: " + e);
+	        }
 		
 		return flights;
 	}
 	
-	//준구님
+	// Jungu
 	public List<Flight> getCustomerFlightSuggestions(int accountNo) {
 		
 		/* Get list of suggested flights depending on customer's accountNo passed
@@ -151,8 +239,8 @@ public class FlightDao {
 		
 		return flights;
 	}
-
-	//준구님
+	
+	//Jungu
 	public List<Flight> getBestSellingFlights() {
 		
 		/* Get list of best selling flights

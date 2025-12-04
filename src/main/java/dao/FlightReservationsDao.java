@@ -1,12 +1,18 @@
 package dao;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.FlightReservations;
 
 public class FlightReservationsDao {
-	//준구님
+    // JDBC
+	static String url = "jdbc:mysql://localhost:3306/travel_reservation?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&autoReconnect=true";
+    static String id = "root";
+    static String password = "root";
+    
+	//Jungu
 	public List<FlightReservations> getReservations(int FlightNum, String airlineID, String CustomerName) {
 		
 		/*
@@ -37,7 +43,8 @@ public class FlightReservationsDao {
 		return reservations;
 		
 	}
-	//우철
+	
+	//Woochul
 	public List<FlightReservations> getRevenueSummary(int FlightNum, String airlineID, String CustomerName,String destCity) {
 		
 		/*
@@ -46,26 +53,74 @@ public class FlightReservationsDao {
 		 * Only one of the two strings will be set, either (FlightNum = 0 and airlineID = "") or CustomerName = ""  
 		 * or destCity = "" depending on query
 		 */
-		
+		String query = "";
 		List<FlightReservations> reservations = new ArrayList<FlightReservations>();
 			
-		/*Sample data begins*/
-		for (int i = 0; i < 4; i++) {
-			FlightReservations reservation = new FlightReservations();
-			
-			reservation.setResrNo(111);
-			reservation.setRevenue(10000.25);
-	
-			reservations.add(reservation);
-				
-		}
-		/*Sample data ends*/
-						
-		return reservations;
 		
+		String query_by_FlightNum = "SELECT R.ResrNo, R.Revenue " + 
+									"FROM FlightReservation R " + 
+									"JOIN Itinerary I ON R.ResrNo = I.ResrNo " + 
+									"WHERE I.FlightNo = ? AND I.AirlineID = ?";								
+		
+		String query_by_CustomerName = "SELECT R.ResrNo, R.Revenue " + 
+			    					   "FROM FlightReservation R " +
+			    					   "JOIN Customer C ON R.AccountNo = C.AccountNo " +
+			    					   "WHERE C.FirstName = ? OR C.LastName = ?";
+		
+		String query_by_destCity = "SELECT R.ResrNo, R.Revenue " + 
+			    				   "FROM FlightReservation R " +
+			    				   "JOIN Itinerary I ON R.ResrNo = I.ResrNo " +
+			    				   "WHERE I.Arrival = ?";
+		
+		if(FlightNum != 0 && airlineID.length() != 0){
+			query = query_by_FlightNum;
+		} else if(CustomerName.length() != 0) {
+			query = query_by_CustomerName;
+		} else if (destCity.length() != 0) {
+			query = query_by_destCity;
+		}
+
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection con = DriverManager.getConnection(url, id, password);
+
+	        PreparedStatement ps = con.prepareStatement(query);
+
+	        
+	        if (query.length() == query_by_FlightNum.length()) {
+	            ps.setInt(1, FlightNum);
+	            ps.setString(2, airlineID);
+	        }
+	        else if (query.length() == query_by_CustomerName.length()) {
+	            ps.setString(1, CustomerName);
+	            ps.setString(2, CustomerName);
+	        }
+	        else if (query.length() == query_by_destCity.length()) {
+	            ps.setString(1, destCity);
+	        } else {
+	        	new IllegalArgumentException("Invalid input for revenue summary query.");
+	        }
+
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+	            FlightReservations reservation = new FlightReservations();
+	            reservation.setResrNo(rs.getInt("ResrNo"));
+	            reservation.setRevenue(rs.getDouble("Revenue"));
+	            reservations.add(reservation);
+	        }
+
+	    } catch (SQLException e) {
+	        System.out.println(e);
+	    } catch (ClassNotFoundException e) {
+	        System.out.println("MySQL Driver not found: " + e);
+	    }
+
+	    return reservations;
 	}
 	
-	//우철
+	
+	//Woochul
 	public List<FlightReservations> getPassengerList(int FlightNum, String AirlineID) {
 		
 		/*
@@ -74,25 +129,43 @@ public class FlightReservationsDao {
 		 */
 		
 		List<FlightReservations> reservations = new ArrayList<FlightReservations>();
-			
-		/*Sample data begins*/
-		for (int i = 0; i < 4; i++) {
-			FlightReservations reservation = new FlightReservations();
-			
-			reservation.setPassengerID(i+1);
-			reservation.setFirstName("John");
-			reservation.setLastName("Wick");
-	
-			reservations.add(reservation);
-				
-		}
-		/*Sample data ends*/
+		
+		String query = "SELECT R.PassengerID, C.FirstName, C.LastName " + 
+					   "FROM FlightReservation R " +
+					   "JOIN Customer C ON R.PassengerID = C.AccountNo " + 
+					   "JOIN Itinerary I ON R.ResrNo = I.ResrNo " + 
+ 					   "WHERE I.FlightNo = ? AND I.AirlineID = ? ";
+		
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection con = DriverManager.getConnection(url, id, password);
+
+	        PreparedStatement ps = con.prepareStatement(query);
+	        ps.setInt(1, FlightNum);
+	        ps.setString(2, AirlineID);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+	            FlightReservations reservation = new FlightReservations();
+
+	            reservation.setPassengerID(rs.getInt("PassengerID"));
+	            reservation.setFirstName(rs.getString("FirstName"));
+	            reservation.setLastName(rs.getString("LastName"));
+	            reservations.add(reservation);
+	        }
+
+	    } catch (SQLException e) {
+	        System.out.println(e);
+	    } catch (ClassNotFoundException e) {
+	        System.out.println("MySQL Driver not found: " + e);
+	    }
 						
 		return reservations;
 		
 	}
 	
-	//준구님
+	//Jungu
 	public List<FlightReservations> getCurrentReservations(int accountNo) {
 		
 		/*
@@ -122,7 +195,7 @@ public class FlightReservationsDao {
 		
 	}
 
-	//준구님
+	//Jungu
 	public List<FlightReservations> getAllReservations(int accountNo) {
 		
 		/*
@@ -152,7 +225,7 @@ public class FlightReservationsDao {
 		
 	}
 	
-	//준구님
+	//Jungu
 	public String cancelReservation(int resrNo) {
 		
 		/*
@@ -165,6 +238,4 @@ public class FlightReservationsDao {
 		return "success";
 		
 	}
-
-
 }
