@@ -3,7 +3,7 @@ CREATE DATABASE travel_reservation;
 USE travel_reservation;
 
 CREATE TABLE Auctions (
-    AccountNo INT PRIMARY KEY,
+    AccountNo INT NOT NULL,
     AirlineID VARCHAR(10) NOT NULL,
     FlightNo INT NOT NULL,
     SeatClass VARCHAR(20) NOT NULL,
@@ -16,7 +16,10 @@ INSERT INTO auctions (AccountNo, AirlineID, FlightNo, SeatClass, Date, NYOP, Acc
 VALUES
 (1001, 'AA', 123, 'Economy', '2025-12-05', 299.99, 0),
 (1002, 'UA', 456, 'Business', '2025-12-10', 899.50, 1),
-(1003, 'DL', 789, 'First', '2025-12-15', 1499.00, 0);
+(1003, 'DL', 789, 'First', '2025-12-15', 1499.00, 0),
+(111, 'AA', 123, 'First', '2025-12-05', 299.99, 0),
+(111, 'AA', 123, 'First', '2025-12-10', 899.50, 1),
+(111, 'AA', 123, 'First', '2025-12-15', 1499.00, 0),
 
 CREATE TABLE Employee (
     SSN CHAR(9) PRIMARY KEY,      
