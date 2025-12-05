@@ -34,6 +34,8 @@ public class AuctionsDao {
 	
 	public List<Auctions> getAllBids(int AccountNo, String AirlineID, int FlightNo, String SeatClass) {
 		
+		System.out.println("getallbids-1");
+		
 		/*
 		 * The students code to fetch data from the database will be written here
 		 * Query to get all bids given the parameters
@@ -41,42 +43,42 @@ public class AuctionsDao {
 		
 		List<Auctions> auctions = new ArrayList<Auctions>();
 			
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo                ?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true", "root", "root");
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM Auctions");
-			
-			while(rs.next()) {
-			    Auctions auction = new Auctions();
-			    auction.setAccountNo(rs.getInt("AccountNo"));
-			    auction.setAirlineID(rs.getString("AirlineID"));
-			    auction.setFlightNo(rs.getInt("FlightNo"));
-			    auction.setSeatClass(rs.getString("SeatClass"));
-			    auction.setDate(rs.getString("Date"));
-			    auction.setNYOP(rs.getDouble("NYOP"));
-			    auction.setAccepted(rs.getBoolean("Accepted"));
-			    auctions.add(auction);
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+//		try {
+//			Class.forName("com.mysql.cj.jdbc.Driver");
+//			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo                ?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true", "root", "root");
+//			Statement st = con.createStatement();
+//			ResultSet rs = st.executeQuery("SELECT * FROM Auctions");
+//			
+//			while(rs.next()) {
+//			    Auctions auction = new Auctions();
+//			    auction.setAccountNo(rs.getInt("AccountNo"));
+//			    auction.setAirlineID(rs.getString("AirlineID"));
+//			    auction.setFlightNo(rs.getInt("FlightNo"));
+//			    auction.setSeatClass(rs.getString("SeatClass"));
+//			    auction.setDate(rs.getString("Date"));
+//			    auction.setNYOP(rs.getDouble("NYOP"));
+//			    auction.setAccepted(rs.getBoolean("Accepted"));
+//			    auctions.add(auction);
+//			}
+//		} catch (Exception e) {
+//			System.out.println(e);
+//		}
 
 		
 //		/*Sample data begins*/
-//		for (int i = 0; i < 4; i++) {
-//			Auctions auction = new Auctions();
-//			auction.setAccountNo(AccountNo);
-//			auction.setAirlineID(AirlineID);
-//			auction.setFlightNo(FlightNo);
-//			auction.setSeatClass(SeatClass);
-//			auction.setAccepted(true);
-//			auction.setDate("2019-01-01");
-//			auction.setNYOP(500);
-//	
-//			auctions.add(auction);
-//				
-//		}
+		for (int i = 0; i < 4; i++) {
+			Auctions auction = new Auctions();
+			auction.setAccountNo(AccountNo);
+			auction.setAirlineID(AirlineID);
+			auction.setFlightNo(FlightNo);
+			auction.setSeatClass(SeatClass);
+			auction.setAccepted(true);
+			auction.setDate("2019-01-01");
+			auction.setNYOP(500);
+	
+			auctions.add(auction);
+				
+		}
 //		/*Sample data ends*/
 								
 		return auctions;
