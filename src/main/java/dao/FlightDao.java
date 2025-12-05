@@ -221,23 +221,52 @@ public class FlightDao {
 	}
 	
 	// Jungu
+	
 	public List<Flight> getCustomerFlightSuggestions(int accountNo) {
-		
-		/* Get list of suggested flights depending on customer's accountNo passed
-		 */
-		
-		List<Flight> flights = new ArrayList<Flight>();
-		
-		for (int i = 0; i < 5; i++) {
-			Flight flight = new Flight();
-			flight.setAirlineID("AA");
-			flight.setFlightNo(111);
-			flight.setNumReservations(30);
-			flights.add(flight);			
-		}
-		/*Sample data ends*/
-		
-		return flights;
+	    List<Flight> flights = new ArrayList<Flight>();
+
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/travel_reservation?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true", "root", "root");
+	        
+	        // ONE SQL: Score flights by customer's frequent airports
+	        String sql = "SELECT f.*, " +
+	                "CASE WHEN i.AirlineID IS NOT NULL THEN 1 ELSE 0 END as suggestionScore " +
+	                "FROM Flight f " +
+	                "LEFT JOIN Itinerary i ON f.AirlineID = i.AirlineID AND f.FlightNo = i.FlightNo " +
+	                "AND i.ResrNo IN (SELECT ResrNo FROM FlightReservation WHERE AccountNo = " + accountNo + ") " +
+	                "ORDER BY suggestionScore DESC, f.NumReservations ASC " +
+	                "LIMIT 5";
+	        
+	        Statement stmt = con.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        
+	        while(rs.next()) {
+	            Flight flight = new Flight();
+	            flight.setAirlineID(rs.getString("AirlineID"));
+	            flight.setFlightNo(rs.getInt("FlightNo"));
+	            flight.setNumOfSeats(rs.getInt("NumOfSeats"));
+	            flight.setDaysOperating(rs.getString("DaysOperating"));
+	            flight.setMinLengthOfStay(rs.getInt("MinLengthOfStay"));
+	            flight.setMaxLengthOfStay(rs.getInt("MaxLengthOfStay"));
+	            flight.setNumReservations(rs.getInt("NumReservations"));
+	            flights.add(flight);
+	        }
+	        
+	    } catch (Exception e) {
+	        System.out.println(e);
+	    }
+	    
+		//		for (int i = 0; i < 5; i++) {
+		//		Flight flight = new Flight();
+		//		flight.setAirlineID("AA");
+		//		flight.setFlightNo(111);
+		//		flight.setNumReservations(30);
+		//		flights.add(flight);			
+			//}
+			///*Sample data ends*/
+			    
+	    return flights;
 	}
 	
 	//Jungu

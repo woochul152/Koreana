@@ -1,4 +1,3 @@
-
 CREATE DATABASE travel_reservation;
 USE travel_reservation;
 
@@ -19,7 +18,7 @@ VALUES
 (1003, 'DL', 789, 'First', '2025-12-15', 1499.00, 0),
 (111, 'AA', 123, 'First', '2025-12-05', 299.99, 0),
 (111, 'AA', 123, 'First', '2025-12-10', 899.50, 1),
-(111, 'AA', 123, 'First', '2025-12-15', 1499.00, 0),
+(111, 'AA', 123, 'First', '2025-12-15', 1499.00, 0);
 
 CREATE TABLE Employee (
     SSN CHAR(9) PRIMARY KEY,      
@@ -63,10 +62,10 @@ INSERT INTO Flight VALUES
 ('AA', 245, 180, '1010101', 2, 21, 0),
 ('DL', 330, 200, '1111111', 1, 14, 0),
 ('DL', 512, 160, '1101100', 0, 7, 0),
-('UA', 220, 140, '1010110', 1, 10, 0),
-('UA', 555, 210, '1110000', 3, 21, 0),
-('SW', 700, 130, '0110111', 0, 7, 0),
-('JB', 990, 175, '1011001', 2, 28, 0);
+('UA', 220, 140, '1010110', 1, 10, 30),
+('UA', 555, 210, '1110000', 3, 21, 30),
+('SW', 700, 130, '0110111', 0, 7, 30),
+('JB', 990, 175, '1011001', 2, 28, 30);
 
 
 
@@ -84,18 +83,19 @@ CREATE TABLE Customer (
     Rating  INT DEFAULT 0
 );
 
-INSERT INTO Customer (FirstName, LastName, Address, City, State, ZipCode, Email, CreditCard, Rating)
+INSERT INTO Customer (AccountNo, FirstName, LastName, Address, City, State, ZipCode, Email, CreditCard, Rating)
 VALUES
-('John', 'Wick', '123 Continental St', 'New York', 'NY', '10001', 'john.wick@example.com', '4111111111111111', 5),
-('Emily', 'Clark', '55 Maple Ave', 'Boston', 'MA', '02115', 'emily.clark@example.com', '5500000000000004', 3),
-('Michael', 'Kim', '789 Oak Road', 'Seattle', 'WA', '98101', 'michael.kim@example.com', '6011111111111117', 4),
-('Sophia', 'Lee', '10 River St', 'San Jose', 'CA', '95112', 'sophia.lee@example.com', '378282246310005', 2),
-('Daniel', 'Park', '77 Cherry Lane', 'Chicago', 'IL', '60616', 'daniel.park@example.com', '4012888888881881', 1),
-('Grace', 'Choi', '420 Pine St', 'Austin', 'TX', '73301', 'grace.choi@example.com', '4222222222222', 4),
-('David', 'Nguyen', '963 Walnut Dr', 'Houston', 'TX', '77001', 'david.nguyen@example.com', '5555555555554444', 5),
-('Isabella', 'Martinez', '30 Golden Rd', 'Miami', 'FL', '33101', 'isabella.martinez@example.com', '378734493671000', 3),
-('James', 'Johnson', '81 Harbor Blvd', 'San Diego', 'CA', '92101', 'james.johnson@example.com', '30569309025904', 2),
-('Hannah', 'Lim', '12 Sunrise Dr', 'New York', 'NY', '10002', 'hannah.lim@example.com', '6011000990139424', 5);
+(1, 'John', 'Wick', '123 Continental St', 'New York', 'NY', '10001', 'john.wick@example.com', '4111111111111111', 5),
+(2, 'Emily', 'Clark', '55 Maple Ave', 'Boston', 'MA', '02115', 'emily.clark@example.com', '5500000000000004', 3),
+(3, 'Michael', 'Kim', '789 Oak Road', 'Seattle', 'WA', '98101', 'michael.kim@example.com', '6011111111111117', 4),
+(4, 'Sophia', 'Lee', '10 River St', 'San Jose', 'CA', '95112', 'sophia.lee@example.com', '378282246310005', 2),
+(5, 'Daniel', 'Park', '77 Cherry Lane', 'Chicago', 'IL', '60616', 'daniel.park@example.com', '4012888888881881', 1),
+(6, 'Grace', 'Choi', '420 Pine St', 'Austin', 'TX', '73301', 'grace.choi@example.com', '4222222222222', 4),
+(7, 'David', 'Nguyen', '963 Walnut Dr', 'Houston', 'TX', '77001', 'david.nguyen@example.com', '5555555555554444', 5),
+(8, 'Isabella', 'Martinez', '30 Golden Rd', 'Miami', 'FL', '33101', 'isabella.martinez@example.com', '378734493671000', 3),
+(9, 'James', 'Johnson', '81 Harbor Blvd', 'San Diego', 'CA', '92101', 'james.johnson@example.com', '30569309025904', 2),
+(10, 'Hannah', 'Lim', '12 Sunrise Dr', 'New York', 'NY', '10002', 'hannah.lim@example.com', '6011000990139424', 5),
+(111, 'Jungu', 'Kang', '12 Sunrise Dr', 'New York', 'NY', '10002', 'jungu.kang@example.com', '6011000990139431', 5);
 
 
 
@@ -130,7 +130,13 @@ VALUES
 ('2024-11-02', 420.00, 25.00, 395.00, '631413555', 2, 2),
 ('2024-11-03', 150.00, 10.00, 140.00, '631413555', 3, 3),
 ('2024-11-04', 580.00, 30.00, 550.00, '631413555', 4, 4),
-('2024-11-05', 260.00, 15.00, 245.00, '631413555', 5, 5);
+('2024-11-05', 260.00, 15.00, 245.00, '631413555', 5, 5),
+('2024-11-01', 350.00, 20.00, 330.00, '631413555', 111, 111),
+('2024-11-02', 420.00, 25.00, 395.00, '631413555', 111, 111),
+('2024-11-03', 150.00, 10.00, 140.00, '631413555', 111, 111),
+('2024-11-04', 580.00, 30.00, 550.00, '631413555', 111, 111),
+('2024-11-05', 260.00, 15.00, 245.00, '631413555', 111, 111);
+
 
 
 CREATE TABLE Itinerary (
@@ -185,7 +191,26 @@ VALUES
  '2024-11-14 10:00:00',
  '2024-11-14 11:15:00',
  '2024-11-14 10:00:00',  
+ '2024-11-14 11:12:00'),
+
+(6, 'DL', 330, 'SEA', 'SFO',
+ '2024-11-12 13:00:00',
+ '2024-11-12 15:00:00',
+ '2024-11-12 13:00:00',      
+ '2024-11-12 15:00:00'),     
+
+(7, 'UA', 555, 'ORD', 'JFK',
+ '2024-11-13 09:00:00',
+ '2024-11-13 12:00:00',
+ '2024-11-13 09:10:00',     
+ '2024-11-13 12:40:00'),    
+
+(8, 'SW', 700, 'SFO', 'LAS',
+ '2024-11-14 10:00:00',
+ '2024-11-14 11:15:00',
+ '2024-11-14 10:00:00',  
  '2024-11-14 11:12:00');
+
 
 
 SELECT * FROM Employee;
