@@ -1,5 +1,11 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+import com.mysql.cj.jdbc.Driver;
+
 import model.Login;
 
 public class LoginDao {
@@ -20,9 +26,27 @@ public class LoginDao {
 		
 		/*Sample data begins*/
 		Login login = new Login();
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
+			String query  = "select role from users where username = ? and password = ?";
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, username);
+			ps.setString(2, password);
+			java.sql.ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				login.setRole(rs.getString("role"));
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
 //		login.setRole("customerRepresentative");
 //		login.setRole("manager");
-		login.setRole("customer");
+		// login.setRole("customer");
 		return login;
 		/*Sample data ends*/
 		
@@ -37,9 +61,31 @@ public class LoginDao {
 		 * Return "success" on successful insertion of a new user
 		 * Return "failure" for an unsuccessful database operation
 		 */
+
+		Login newLogin = login;
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
+			String query  = "insert into users (username, password, role) values (?, ?, ?)";
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, newLogin.getUsername());
+			ps.setString(2, newLogin.getPassword());
+			ps.setString(3, newLogin.getRole());
+			int result = ps.executeUpdate();
+			if(result > 0) {
+				return "success";
+			} else {
+				return "failure";
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+			return "failure";
+		}
+
 		
 		/*Sample data begins*/
-		return "success";
+		// return "success";
 		/*Sample data ends*/
 	}
 
