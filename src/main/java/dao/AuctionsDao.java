@@ -1,4 +1,6 @@
 package dao;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,22 +41,44 @@ public class AuctionsDao {
 		
 		List<Auctions> auctions = new ArrayList<Auctions>();
 			
-		/*Sample data begins*/
-		for (int i = 0; i < 4; i++) {
-			Auctions auction = new Auctions();
-			auction.setAccountNo(AccountNo);
-			auction.setAirlineID(AirlineID);
-			auction.setFlightNo(FlightNo);
-			auction.setSeatClass(SeatClass);
-			auction.setAccepted(true);
-			auction.setDate("2019-01-01");
-			auction.setNYOP(500);
-	
-			auctions.add(auction);
-				
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo                ?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true", "root", "root");
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery("SELECT * FROM Auctions");
+			
+			while(rs.next()) {
+			    Auctions auction = new Auctions();
+			    auction.setAccountNo(rs.getInt("AccountNo"));
+			    auction.setAirlineID(rs.getString("AirlineID"));
+			    auction.setFlightNo(rs.getInt("FlightNo"));
+			    auction.setSeatClass(rs.getString("SeatClass"));
+			    auction.setDate(rs.getString("Date"));
+			    auction.setNYOP(rs.getDouble("NYOP"));
+			    auction.setAccepted(rs.getBoolean("Accepted"));
+			    auctions.add(auction);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
 		}
-		/*Sample data ends*/
-						
+
+		
+//		/*Sample data begins*/
+//		for (int i = 0; i < 4; i++) {
+//			Auctions auction = new Auctions();
+//			auction.setAccountNo(AccountNo);
+//			auction.setAirlineID(AirlineID);
+//			auction.setFlightNo(FlightNo);
+//			auction.setSeatClass(SeatClass);
+//			auction.setAccepted(true);
+//			auction.setDate("2019-01-01");
+//			auction.setNYOP(500);
+//	
+//			auctions.add(auction);
+//				
+//		}
+//		/*Sample data ends*/
+								
 		return auctions;
 		
 	}
