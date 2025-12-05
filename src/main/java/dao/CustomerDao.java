@@ -28,30 +28,6 @@ public class CustomerDao {
 		 * Each record is required to be encapsulated as a "Customer" class object and added to the "customers" List
 		 */
 		
-//		try {
-//			Class.forName("com.mysql.jdbc.Driver");
-//			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/travel_reservations", "root", "root");
-//			Statement st = con.createStatement();
-//			ResultSet rs = st.executeQuery("select * from customer where FirstName like \'%" + searchKeyword + "%\'" + "or lastName like \'%" + searchKeyword + "%\'");
-//			
-//			while(rs.next()) {
-//				Customer customer = new Customer();
-////				customer.setCustomerID(rs.getString("CustomerId"));
-//				customer.setAddress(rs.getString("adress"));
-//				customer.setLastName(rs.getString("LastName"));
-//				customer.setFirstName(rs.getString("FirstName"));
-//				customer.setCity(rs.getString("City"));
-//				customer.setState(rs.getString("State"));
-//				customer.setEmail(rs.getString("Email"));
-//				customer.setZipCode(rs.getInt("ZipCode"));
-////				customer.setTelephone(rs.getString("Telephone"));
-//				customer.setRating(rs.getInt("Rating"));
-//				customers.add(customer);
-//			}
-//		} catch (Exception e) {
-//			System.out.println(e);
-//		}
-		
 		/*Sample data begins*/
 		for (int i = 0; i < 10; i++) {
 			Customer customer = new Customer();
@@ -96,86 +72,31 @@ public class CustomerDao {
 	}
 
 	public List<Customer> getCustomerMailingList() {
+
 		/*
-		 * This method fetches one or more customers and returns it as an ArrayList
+		 * This method fetches the all customer mailing details and returns it
+		 * The students code to fetch data from the database will be written here
+		 * Each customer record is required to be encapsulated as a "Customer" class object and added to the "customers" List
 		 */
+
 		
 		List<Customer> customers = new ArrayList<Customer>();
-
-		/*
-		 * The students code to fetch data from the database will be written here
-		 * Each record is required to be encapsulated as a "Customer" class object and added to the "customers" List
-		 */
 		
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo                ?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true", "root", "root");
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery("select * from customer where FirstName like \'%" + "Luke" + "%\'" + "or lastName like \'%" + "Luke" + "%\'");
-			
-			while(rs.next()) {
-				Customer customer = new Customer();
-//				customer.setCustomerID(rs.getString("CustomerId"));
-				customer.setAddress(rs.getString("address"));
-				customer.setLastName(rs.getString("LastName"));
-				customer.setFirstName(rs.getString("FirstName"));
-				customer.setCity(rs.getString("City"));
-				customer.setState(rs.getString("State"));
-				customer.setEmail(rs.getString("Email"));
-				customer.setZipCode(rs.getInt("ZipCode"));
-//				customer.setTelephone(rs.getString("Telephone"));
-				customer.setRating(rs.getInt("Rating"));
-				customers.add(customer);
-			}
-		} catch (Exception e) {
-			System.out.println(e);
+		/*Sample data begins*/
+		for (int i = 0; i < 10; i++) {
+			Customer customer = new Customer();
+			customer.setAddress("123 Success Street");
+			customer.setLastName("Lu");
+			customer.setFirstName("Shiyong");
+			customer.setCity("Stony Brook");
+			customer.setState("NY");
+			customer.setEmail("shiyong@cs.sunysb.edu");
+			customer.setZipCode(11790);
+			customers.add(customer);			
 		}
-		
-//		/*Sample data begins*/
-//		for (int i = 0; i < 10; i++) {
-//			Customer customer = new Customer();
-//			customer.setAccountNo(111);
-//			customer.setAddress("123 Success Street");
-//			customer.setLastName("Lu");
-//			customer.setFirstName("Shiyong");
-//			customer.setCity("Stony Brook");
-//			customer.setState("NY");
-//			customer.setEmail("shiyong@cs.sunysb.edu");
-//			customer.setZipCode(11790);
-////			customer.setTelephone("5166328959");
-//			customer.setCreditCard("1234567812345678");
-//			customer.setRating(1);
-//			customers.add(customer);			
-//		}
-//		/*Sample data ends*/
+		/*Sample data ends*/
 		
 		return customers;
-
-//
-//		/*
-//		 * This method fetches the all customer mailing details and returns it
-//		 * The students code to fetch data from the database will be written here
-//		 * Each customer record is required to be encapsulated as a "Customer" class object and added to the "customers" List
-//		 */
-//
-//		
-//		List<Customer> customers = new ArrayList<Customer>();
-//		
-//		/*Sample data begins*/
-//		for (int i = 0; i < 10; i++) {
-//			Customer customer = new Customer();
-//			customer.setAddress("123 Success Street");
-//			customer.setLastName("Lu");
-//			customer.setFirstName("Shiyong");
-//			customer.setCity("Stony Brook");
-//			customer.setState("NY");
-//			customer.setEmail("shiyong@cs.sunysb.edu");
-//			customer.setZipCode(11790);
-//			customers.add(customer);			
-//		}
-//		/*Sample data ends*/
-//		
-//		return customers;
 	}
 
 	public Customer getCustomer(int accountNo) {

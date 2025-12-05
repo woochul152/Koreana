@@ -8,6 +8,9 @@ public class Itinerary {
 	private String Arrival;
 	private String DepTime;
 	private String ArrTime;
+	// added two field variables for getOnTimeFlights/ getDelaydFlights
+	private String ActualDepTime;
+	private String ActualArrTime;
 	
 	public int getResrNo() {
 		return ResrNo;
@@ -51,5 +54,16 @@ public class Itinerary {
 	public void setArrTime(String arrTime) {
 		ArrTime = arrTime;
 	}
-	
+	public String getActualArrTime() {
+		return ActualArrTime;
+	}
+	public void setActualArrTime(String actualArrTime) {
+		ActualArrTime = actualArrTime;
+	}
+	public String getActualDepTime() {
+		return ActualDepTime;
+	}
+	public void setActualDepTime(String actualDepTime) {
+		ActualDepTime = actualDepTime;
+	}
 }

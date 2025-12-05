@@ -7,6 +7,7 @@ import model.Itinerary;
 
 public class ItineraryDao {
 	
+	//Jungu
 	public List<Itinerary> getItineraryForReservation(int resrNo) {
 			/*
 			 * Code to fetch itinerary from resrNo goes here
