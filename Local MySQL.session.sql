@@ -223,16 +223,34 @@ VALUES
  '2026-11-14 10:00:00',  
  '2026-11-14 11:12:00');
 
+CREATE TABLE Login (
+    username VARCHAR(255) PRIMARY KEY,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL
+);
 
+INSERT INTO Login (username, password, role) VALUES
+('emily.johnson@company.com', 'password', 'manager'),
+('sarah.kim@company.com', 'password', 'manager');
+INSERT INTO Login (username, password, role) VALUES
+('john.smith@company.com', 'password', 'customerRepresentative'),
+('michael.lee@company.com', 'password', 'customerRepresentative'),
+('david.park@company.com', 'password', 'customerRepresentative');
+INSERT INTO Login (username, password, role) VALUES
+('john.wick@example.com', 'password', 'customer'),
+('emily.clark@example.com', 'password', 'customer'),
+('michael.kim@example.com', 'password', 'customer'),
+('sophia.lee@example.com', 'password', 'customer'),
+('daniel.park@example.com', 'password', 'customer'),
+('grace.choi@example.com', 'password', 'customer'),
+('david.nguyen@example.com', 'password', 'customer'),
+('isabella.martinez@example.com', 'password', 'customer'),
+('james.johnson@example.com', 'password', 'customer'),
+('hannah.lim@example.com', 'password', 'customer'),
+('jungu.kang@example.com', 'password', 'customer');
 
-
-SELECT * FROM Employee;
-SELECT * FROM Flight;
-SELECT * FROM Customer;
-SELECT * FROM FlightReservation; 
-SELECT * FROM Itinerary;
-
-
-
-
-
+-- SELECT * FROM Employee;
+-- SELECT * FROM Flight;
+-- SELECT * FROM Customer;
+-- SELECT * FROM FlightReservation; 
+-- SELECT * FROM Itinerary;
