@@ -11,7 +11,7 @@ CREATE TABLE Auctions (
     Accepted TINYINT(1) DEFAULT 0
 );
 
-INSERT INTO auctions (AccountNo, AirlineID, FlightNo, SeatClass, Date, NYOP, Accepted) 
+INSERT INTO Auctions (AccountNo, AirlineID, FlightNo, SeatClass, Date, NYOP, Accepted) 
 VALUES
 (1001, 'AA', 123, 'Economy', '2025-12-05', 299.99, 0),
 (1002, 'UA', 456, 'Business', '2025-12-10', 899.50, 1),
