@@ -12,7 +12,10 @@ public class LoginDao {
 	/*
 	 * This class handles all the database operations related to login functionality
 	 */
-	
+		String url = "jdbc:mysql://localhost:3306/travel_reservation?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&autoReconnect=true";
+		String id = "root";
+		String password = "root";
+
 	
 	public Login login(String username, String password) {
 		/*
@@ -29,7 +32,7 @@ public class LoginDao {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
+			Connection con = DriverManager.getConnection(url, id ,password);
 			String query  = "select role from users where username = ? and password = ?";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setString(1, username);
@@ -66,7 +69,7 @@ public class LoginDao {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
+			Connection con = DriverManager.getConnection(url, id ,password);
 			String query  = "insert into users (username, password, role) values (?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setString(1, newLogin.getUsername());

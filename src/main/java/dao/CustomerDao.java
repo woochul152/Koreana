@@ -17,13 +17,17 @@ public class CustomerDao {
 	 * @param String searchKeyword
 	 * @return ArrayList<Customer> object
 	 */
+
+		String url = "jdbc:mysql://localhost:3306/travel_reservation?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&autoReconnect=true";
+		String id = "root";
+		String password = "root";
+
 	public List<Customer> getCustomers() {
 		/*
 		 * This method fetches one or more customers and returns it as an ArrayList
 		 */
 		
 		List<Customer> customers = new ArrayList<Customer>();
-
 		/*
 		 * The students code to fetch data from the database will be written here
 		 * Each record is required to be encapsulated as a "Customer" class object and added to the "customers" List
@@ -49,7 +53,7 @@ public class CustomerDao {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/smartshop","root","password");
+			Connection con = DriverManager.getConnection(url, id, password);
 
 			String sql = "SELECT * FROM customer";
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -91,7 +95,7 @@ public class CustomerDao {
 
 		try{
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
+			Connection con = DriverManager.getConnection(url, id, password);
 
 			String sql = "SELECT c.* FROM customer c JOIN orders o ON c.accountNo = o.accountNo GROUP BY c.accountNo ORDER BY SUM(o.totalAmount) DESC LIMIT 1";
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -143,7 +147,7 @@ public class CustomerDao {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
+			Connection con = DriverManager.getConnection(url, id ,password);
 
 			String sql = "SELECT accountNo, firstName, lastName, address, city, state, zipCode FROM customer";
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -194,7 +198,7 @@ public class CustomerDao {
 		Customer customer = null;
 		try{
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
+			Connection con = DriverManager.getConnection(url, id , password);
 
 			String sql = "SELECT * FROM customer WHERE accountNo = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -248,7 +252,7 @@ public class CustomerDao {
 
 		try{
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
+			Connection con = DriverManager.getConnection(url, id, password);
 
 			String sql = "DELETE FROM customer WHERE accountNo = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -281,7 +285,7 @@ public class CustomerDao {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
+			Connection con = DriverManager.getConnection(url, id, password);
 			String sql = "SELECT accountNo FROM customer WHERE email = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, emailaddress);
@@ -309,7 +313,7 @@ public class CustomerDao {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
+			Connection con = DriverManager.getConnection(url, id , password);
 
 			String sql = "INSERT INTO customer (firstName, lastName, address, city, state, zipCode, email, creditCard, rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -351,7 +355,7 @@ public class CustomerDao {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
+			Connection con = DriverManager.getConnection(url, id, password);
 			String sql = "UPDATE customer SET firstName = ?, lastName = ?, address = ?, city = ?, state = ?, zipCode = ?, email = ?, creditCard = ?, rating = ? WHERE accountNo = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, customer.getFirstName());
