@@ -1,6 +1,6 @@
 package dao;
 
-import java.lang.classfile.CustomAttribute;
+//import java.lang.classfile.CustomAttribute;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +91,7 @@ public class CustomerDao {
 
 		try{
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/smartshop","root","password");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
 
 			String sql = "SELECT c.* FROM customer c JOIN orders o ON c.accountNo = o.accountNo GROUP BY c.accountNo ORDER BY SUM(o.totalAmount) DESC LIMIT 1";
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -143,7 +143,7 @@ public class CustomerDao {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/smartshop","root","password");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
 
 			String sql = "SELECT accountNo, firstName, lastName, address, city, state, zipCode FROM customer";
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -194,7 +194,7 @@ public class CustomerDao {
 		Customer customer = null;
 		try{
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/smartshop","root","password");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
 
 			String sql = "SELECT * FROM customer WHERE accountNo = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -248,7 +248,7 @@ public class CustomerDao {
 
 		try{
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/smartshop","root","password");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
 
 			String sql = "DELETE FROM customer WHERE accountNo = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -281,7 +281,7 @@ public class CustomerDao {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/smartshop","root","password");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
 			String sql = "SELECT accountNo FROM customer WHERE email = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, emailaddress);
@@ -309,7 +309,7 @@ public class CustomerDao {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/smartshop","root","password");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
 
 			String sql = "INSERT INTO customer (firstName, lastName, address, city, state, zipCode, email, creditCard, rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -351,7 +351,7 @@ public class CustomerDao {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/smartshop","root","password");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/koreana","root","password");
 			String sql = "UPDATE customer SET firstName = ?, lastName = ?, address = ?, city = ?, state = ?, zipCode = ?, email = ?, creditCard = ?, rating = ? WHERE accountNo = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, customer.getFirstName());
