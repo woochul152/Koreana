@@ -55,27 +55,28 @@ public class CustomerDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection(url, id, password);
 
-			String sql = "SELECT * FROM customer";
+			String sql = "SELECT * FROM Customer";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
 			while(rs.next()) {
 				Customer customer = new Customer();
-				customer.setAccountNo(rs.getInt("accountNo"));
-				customer.setAddress(rs.getString("address"));
-				customer.setLastName(rs.getString("lastName"));
-				customer.setFirstName(rs.getString("firstName"));
-				customer.setCity(rs.getString("city"));
-				customer.setState(rs.getString("state"));
-				customer.setEmail(rs.getString("email"));
-				customer.setZipCode(rs.getInt("zipCode"));
+				customer.setAccountNo(rs.getInt("AccountNo"));
+				customer.setAddress(rs.getString("Address"));
+				customer.setLastName(rs.getString("LastName"));
+				customer.setFirstName(rs.getString("FirstName"));
+				customer.setCity(rs.getString("City"));
+				customer.setState(rs.getString("State"));
+				customer.setEmail(rs.getString("Email"));
+				customer.setZipCode(Integer.parseInt(rs.getString("ZipCode")));
 				customer.setCreditCard(rs.getString("creditCard"));
 				customer.setRating(rs.getInt("rating"));
 				customers.add(customer);	
 			}
 
 		} catch (Exception e) {
-			System.out.println(e);
+			e.getStackTrace();
+			System.out.println(e.getMessage());
 		}
 
 		/*Sample data ends*/
@@ -97,7 +98,7 @@ public class CustomerDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection(url, id, password);
 
-			String sql = "SELECT c.* FROM customer c JOIN FlightReservation fr ON c.accountNo = fr.accountNo GROUP BY c.accountNo ORDER BY SUM(fr.Revenue) DESC LIMIT 1";
+			String sql = "SELECT c.* FROM Customer c JOIN FlightReservation fr ON c.accountNo = fr.accountNo GROUP BY c.accountNo ORDER BY SUM(fr.Revenue) DESC LIMIT 1";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
@@ -117,6 +118,7 @@ public class CustomerDao {
 			}
 
 		} catch (Exception e) {
+			e.getStackTrace();
 			System.out.println(e);
 		}
 
@@ -149,7 +151,7 @@ public class CustomerDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection(url, id ,password);
 
-			String sql = "SELECT accountNo, firstName, lastName, address, city, state, zipCode FROM customer";
+			String sql = "SELECT accountNo, firstName, lastName, address, city, state, zipCode FROM Customer";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
@@ -165,6 +167,7 @@ public class CustomerDao {
 				customers.add(customer);	
 			}
 		} catch (Exception e) {
+			e.getStackTrace();
 			System.out.println(e);
 		}
 
@@ -200,7 +203,7 @@ public class CustomerDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection(url, id , password);
 
-			String sql = "SELECT * FROM customer WHERE accountNo = ?";
+			String sql = "SELECT * FROM Customer WHERE accountNo = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, accountNo);
 			ResultSet rs = ps.executeQuery();
@@ -220,6 +223,7 @@ public class CustomerDao {
 				return customer;	
 			}
 		} catch (Exception e) {
+			e.getStackTrace();
 			System.out.println(e);
 		}
 
@@ -254,7 +258,7 @@ public class CustomerDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection(url, id, password);
 
-			String sql = "DELETE FROM customer WHERE accountNo = ?";
+			String sql = "DELETE FROM Customer WHERE accountNo = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, accountNo);
 			int rowsAffected = ps.executeUpdate();
@@ -265,6 +269,7 @@ public class CustomerDao {
 				return "failure";
 			}
 		} catch (Exception e) {
+			e.getStackTrace();
 			System.out.println(e);
 			return "failure";
 		}
@@ -286,7 +291,7 @@ public class CustomerDao {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection(url, id, password);
-			String sql = "SELECT accountNo FROM customer WHERE email = ?";
+			String sql = "SELECT accountNo FROM Customer WHERE email = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, emailaddress);
 			ResultSet rs = ps.executeQuery();
@@ -294,6 +299,7 @@ public class CustomerDao {
 				return rs.getInt("accountNo");
 			}
 		} catch (Exception e) {
+			e.getStackTrace();
 			System.out.println(e);
 		}
 
@@ -315,7 +321,7 @@ public class CustomerDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection(url, id , password);
 
-			String sql = "INSERT INTO customer (firstName, lastName, address, city, state, zipCode, email, creditCard, rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO Customer (firstName, lastName, address, city, state, zipCode, email, creditCard, rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, customer.getFirstName());
 			ps.setString(2, customer.getLastName());
@@ -334,6 +340,7 @@ public class CustomerDao {
 				return "failure";
 			}
 		} catch (Exception e) {
+			e.getStackTrace();
 			System.out.println(e);
 			return "failure";
 		}
@@ -356,7 +363,7 @@ public class CustomerDao {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection(url, id, password);
-			String sql = "UPDATE customer SET firstName = ?, lastName = ?, address = ?, city = ?, state = ?, zipCode = ?, email = ?, creditCard = ?, rating = ? WHERE accountNo = ?";
+			String sql = "UPDATE Customer SET firstName = ?, lastName = ?, address = ?, city = ?, state = ?, zipCode = ?, email = ?, creditCard = ?, rating = ? WHERE accountNo = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, customer.getFirstName());
 			ps.setString(2, customer.getLastName());
@@ -375,6 +382,7 @@ public class CustomerDao {
 				return "failure";
 			}
 		} catch (Exception e) {
+			e.getStackTrace();
 			System.out.println(e);
 			return "failure";
 		}
