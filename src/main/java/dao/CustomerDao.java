@@ -18,7 +18,7 @@ public class CustomerDao {
 	 * @return ArrayList<Customer> object
 	 */
 
-		String url = "jdbc:mysql://localhost:3306/travel_reservation?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&autoReconnect=true";
+		String url = "jdbc:mysql://localhost:3306/travel_reservation?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
 		String id = "root";
 		String password = "root";
 
@@ -97,7 +97,7 @@ public class CustomerDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection(url, id, password);
 
-			String sql = "SELECT c.* FROM customer c JOIN orders o ON c.accountNo = o.accountNo GROUP BY c.accountNo ORDER BY SUM(o.totalAmount) DESC LIMIT 1";
+			String sql = "SELECT c.* FROM customer c JOIN FlightReservation fr ON c.accountNo = fr.accountNo GROUP BY c.accountNo ORDER BY SUM(fr.Revenue) DESC LIMIT 1";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 

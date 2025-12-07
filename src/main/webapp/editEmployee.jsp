@@ -145,9 +145,8 @@
                         <hr class="my-4">
 
                         <div class="d-flex justify-content-between">
-                            <a href="getEmployees" class="btn btn-secondary text-white" style="width: 48%">Cancel</a>
-                            
                             <button type="submit" class="btn btn-primary btn-lg" style="width: 48%">Update Employee</button>
+                            <a href="getEmployees" class="btn btn-secondary text-white" style="width: 48%">Cancel</a>
                         </div>
 
                     </form>
