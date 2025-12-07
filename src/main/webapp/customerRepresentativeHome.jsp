@@ -13,89 +13,119 @@
 		<meta name="viewport" content="width:device-width, initial-scale=1">
 		<link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
 		<title>Customer Representative Home</title>
+		<style>
+			body {
+				background-color: #ffffff;
+			}
+			.card {
+				border: none;
+				border-radius: 8px;
+				transition: transform 0.2s;
+			}
+			.card:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+			}
+			.navbar {
+				box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+			}
+			.btn-wrapper {
+				margin-bottom: 8px;
+			}
+    	</style>
 	</head>
-	<body class="container">
-	
-		<h1>Welcome to the Online Travel Reservation System!</h1>
-		<div class="container">
-			<h2>Customer Representative Options:</h2>
-			<%
-				String email = (String)session.getAttribute("email");
-				String role = (String)session.getAttribute("role");
-				
-				//redirect to appropriate home page if already logged in
-				if(email != null) {
-					if(role.equals("manager")) {
-						response.sendRedirect("managerHome.jsp");
-					}
-					else if(!role.equals("customerRepresentative")) {
-						response.sendRedirect("home.jsp");
-					}
-				}
-				else {
-					// redirect to log in if not alreaddy logged in
-					response.sendRedirect("index.jsp");
-				}
-			%>
+	<body>
+
+		<%
+			String email = (String)session.getAttribute("email");
+			String role = (String)session.getAttribute("role");
 			
-			<div class="row">
-				<div class="col">
-					<div class="card">
-					  <div class="card-body">
-					    <h5 class="card-title">Record a Reservation</h5>
-    					<div class="container">
-							<form action="bookFlightReservationsCustomer">
-								<input type="submit" value="Record Reservation" class="btn btn-success"/>
-							</form>
-						</div>
-					  </div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card">
-					  <div class="card-body">
-					    <h5 class="card-title">Manage Customer</h5>
-    					<div class="container">
-							<form action="addCustomer.jsp">
-								<input type="submit" value="Add Customer" class="btn btn-primary"/>
-							</form>
-							<form action="getCustomers" class="pt-1">
-								<input type="submit" value="View / Edit / Delete Customer" class="btn btn-primary"/>
-							</form>
-							<!-- <form action="searchCustomer.jsp" class="pt-1">
-								<input type="submit" value="Search Customer" class="btn btn-primary"/>
-							</form> -->
-							
-						</div>
-					  </div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card">
-					  <div class="card-body">
-					    <h5 class="card-title">View Customer Mailing List</h5>
-    					<div class="container">
-							<form action="getCustomerMailingList">
-								<input type="submit" value="Customer Mailing List" class="btn btn-primary"/>
-							</form>
-						</div>
-					  </div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card">
-					  <div class="card-body">
-					    <h5 class="card-title">View Suggestions for Customers</h5>
-    					<div class="container">
-							<form action="getCustomers">
-								<input type="submit" value="View Suggestions" class="btn btn-success"/>
-							</form>
-						</div>
-					  </div>
-					</div>
-				</div>			
-		</div>
+			//redirect to appropriate home page if already logged in
+			if(email != null) {
+				if(role.equals("manager")) {
+					response.sendRedirect("managerHome.jsp");
+				}
+				else if(!role.equals("customerRepresentative")) {
+					response.sendRedirect("home.jsp");
+				}
+			}
+			else {
+				// redirect to log in if not alreaddy logged in
+				response.sendRedirect("index.jsp");
+			}
+		%>
 		
+		<nav class="navbar navbar-expand-lg navbar-white bg-dark mb-4">
+			<div class="container">
+			</div>
+		</nav>
+
+		<div class="container">
+
+			<div class="jumbotron p-4 p-md-5 text-white rounded bg-info mb-4">
+				<h1 class="display-4">Welcome</h1>
+			</div>
+
+		<div class="row">
+			<div class="col-lg-4 col-md-6 mb-4">
+				<div class="card h-100 shadow-sm">
+					<div class="card-body">
+					<h5 class="card-title">Record a Reservation</h5>
+						<form action="bookFlightReservationsCustomer">
+							<button type="submit" class="btn btn-primary btn-block">Book Reservation</button>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-4 col-md-6 mb-4">
+				<div class="card h-100 shadow-sm">
+					<div class="card-body">
+					<h5 class="card-title">Manage Customer</h5>
+
+					
+					<div class="btn-wrapper">
+						<form action="addCustomer.jsp">
+							<button type="submit" class="btn btn-primary btn-block">Add Cusomter</button>
+						</form>
+					</div>
+
+					<div class="btn-wrapper">
+						<form action="getCustomers">
+							<button type="submit" class="btn btn-outline-primary btn-block">View / Edit Customers</button>
+						</form>
+					</div>
+					</div>	
+				</div>
+			</div>
+
+			<div class="col-lg-4 col-md-6 mb-4">
+				<div class="card h-100 shadow-sm">
+					<div class="card-body">
+						<h5 class="card-title">View Customer Mailing List</h5>
+						<div class="container">
+							<form action="getCustomerMailingList">
+								<button type="submit" class="btn btn-outline-primary btn-block">Customer Mailing List</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-4 col-md-6 mb-4">
+				<div class="card h-100 shadow-sm">
+					<div class="card-body">
+						<h5 class="card-title">View Suggestions for Customers</h5>
+						<div class="btn-wrapper">
+							<form action="getCustomers">
+								<button type="submit" class="btn btn-outline-primary btn-block">View Suggestions</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+	
 		<div class="container">
 			<form action="logout">
 				<input type="submit" value="Logout" class="btn btn-danger"/>

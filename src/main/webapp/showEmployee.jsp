@@ -57,7 +57,7 @@
                 <div class="table-card">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h2 class="text-primary font-weight-bold">Employee Management</h2>
-                        <form action="managerHome.jsp">
+                        <form action="home.jsp">
                             <button type="submit" class="btn btn-outline-secondary">Back to Dashboard</button>
                         </form>
                     </div>
@@ -134,7 +134,7 @@
                 </div> </div>
         </div>
     </div>
-	
+
 	<script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
 	<script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	

@@ -109,7 +109,7 @@
                                 <form action="getDelayedFlights"><button class="btn btn-outline-danger btn-block btn-sm">Delayed</button></form>
                             </div>
                         </div>
-                         <div class="mt-2">
+                            <div class="mt-2">
                              <form action="getMostActiveFlights">
                                 <button class="btn btn-dark btn-block btn-sm">Most Active Flights</button>
                             </form>

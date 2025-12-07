@@ -16,42 +16,77 @@
 	<link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
 	<title>Flight Suggestions</title>
 </head>
-<body class="container"><br>
+	<style>
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+        
+        .table-card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+            background-color: white;
+            width: 100%;
+        }
+        
+        .thead-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-action {
+            width: 80px;
+            font-size: 0.9rem;
+        }
+    </style>
+<body>
+	<div class="container-fluid px-4"> <div class="row justify-content-center">
+            <div class="col-12">
+                
+                <div class="table-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="text-primary font-weight-bold">Flight Suggestions</h2>
+                        <form action="home.jsp">
+                            <button type="submit" class="btn btn-outline-secondary">Back to Dashboard</button>
+                        </form>
+                    </div>
 
-	<h1>Flight Suggestions are:</h1><br>
-	<div class="container">
-	<c:if test="${empty items}">
-		<h3>Items not found!</h3> 
-	</c:if>
-	<c:if test="${not empty items}">
-		<table class="table table-striped">
-		  <thead>
-		    <tr>
-		      <th>Airline ID</th>
-		      <th>Flight Number</th>
-		      <th>Total Reservations</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		     <c:forEach items="${items}" var="cd">
-		       <tr>
-		         <td>${cd.getAirlineID()}</td>
-		         <td>${cd.getFlightNo()}</td>		         
-		         <td>${cd.getNumReservations()}</td>
-		         <td></td>
-		       </tr>
-		     </c:forEach>
-		  </tbody>
-		</table>
-	</c:if>
-	</div>
-	
-	<div class="container pt-1">
-		<form action="home.jsp">
-			<input type="submit" value="Home" class="btn btn-success"/>
-		</form>
-	</div>
+                    <c:if test="${empty items}">
+                        <div class="alert alert-warning text-center" role="alert">
+                            <h4>No Customer Records Found</h4>
+                            <p>There are no customer in the database currently.</p>
+                        </div>
+                    </c:if>
 
+					<c:if test="${not empty items}">
+						<div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+								<thead class="thead-primary">
+									<tr>
+										<th>Airline ID</th>
+										<th>Flight Number</th>
+										<th>Total Reservations</th>
+									</tr>
+								</thead>
+		  						<tbody>
+									<c:forEach items="${items}" var="cd">
+									<tr>
+										<td>${cd.getAirlineID()}</td>
+										<td>${cd.getFlightNo()}</td>		         
+										<td>${cd.getNumReservations()}</td>
+									</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</c:if>
+				</div>
+			</div>
+		</div>
 	
 	<script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
 	<script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
