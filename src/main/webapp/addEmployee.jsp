@@ -66,11 +66,11 @@
                         
                         <div class="section-title mt-2">Account Information</div>
                         <div class="form-row"> <div class="form-group col-md-6"> <label for="employeeEmail">Email Address</label>
-                                <input type="email" class="form-control" id="employeeEmail" name="employeeEmail" placeholder="name@company.com" required>
+                                <input type="email" class="form-control" id="employeeEmail" name="employeeEmail" placeholder="Enter email" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="employeePassword">Password</label>
-                                <input type="password" class="form-control" id="employeePassword" name="employeePassword" placeholder="Set a password" required>
+                                <input type="password" class="form-control" id="employeePassword" name="employeePassword" placeholder="Password" required>
                             </div>
                         </div>
 
@@ -133,7 +133,7 @@
 
                         <div class="d-flex justify-content-between">
 							<button type="submit" class="btn btn-primary btn-lg" style="width: 48%">Create Employee</button>
-                            <a href="managerHome.jsp" class="btn btn-secondary text-white" style="width: 48%">Cancel</a>
+                            <a href="home.jsp" class="btn btn-secondary text-white" style="width: 48%">Cancel</a>
                         </div>
 
                     </form>

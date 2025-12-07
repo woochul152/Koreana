@@ -21,32 +21,32 @@
 	<link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />	
 	<script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
 	<script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-		<style>
-	body {
-		background-color: #ffffff;
-	}
-	.form-card {
-		border: none;
-		border-radius: 8px;
-		box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-		padding: 30px;
-		background-color: white;
-		margin-top: 20px;
-		margin-bottom: 40px;
-	}
-	.section-title {
-		color: #007bff;
-		font-size: 1.1rem;
-		font-weight: bold;
-		margin-bottom: 15px;
-		border-bottom: 2px solid #e9ecef;
-		padding-bottom: 5px;
-	}
-	.custom-control-label {
-		font-weight: bold;
-		color: #495057;
-	}
-</style>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+        .form-card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+            background-color: white;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        .section-title {
+            color: #007bff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 5px;
+        }
+        .custom-control-label {
+            font-weight: bold;
+            color: #495057;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
